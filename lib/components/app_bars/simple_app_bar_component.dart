@@ -27,7 +27,7 @@ class SimpleAppBarComponent extends StatelessWidget
   SimpleAppBarComponent(
       {this.title = "",
       this.imageTitle = "",
-      this.height = 48.0,
+      this.height = 55.0,
       this.color = ColorConstant.white,
       this.bottomLeftRadius = 0.0,
       this.bottomRightRadius = 0.0,
@@ -51,7 +51,7 @@ class SimpleAppBarComponent extends StatelessWidget
       child: Container(
         color: ColorConstant.white,
         child: Container(
-          height: MediaQuery.of(context).size.height,
+          // height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           decoration: new BoxDecoration(
               color: color,
@@ -59,7 +59,7 @@ class SimpleAppBarComponent extends StatelessWidget
                   bottomLeft: Radius.circular(bottomLeftRadius),
                   bottomRight: Radius.circular(bottomRightRadius))),
           child: Padding(
-            padding: const EdgeInsets.only(top: 42.0, left: 16),
+            padding: const EdgeInsets.only(top: 50.0, left: 16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,

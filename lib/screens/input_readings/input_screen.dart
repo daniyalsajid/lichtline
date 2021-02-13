@@ -1,4 +1,3 @@
-
 import 'package:lichtline/components/input_component.dart';
 import 'package:lichtline/components/text_component.dart';
 import 'package:lichtline/constants/colors/colors_constants.dart';
@@ -6,8 +5,10 @@ import 'package:lichtline/constants/routes/routes_constants.dart';
 import 'package:lichtline/constants/strings/string_constants.dart';
 import 'package:lichtline/constants/styles/font_styles_constants.dart';
 import 'package:lichtline/models/input_comparison_model.dart';
+import 'package:lichtline/providers/home_provider.dart';
 import 'package:lichtline/ui_utils/size_config.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class InputScreen extends StatefulWidget {
   @override
@@ -140,6 +141,7 @@ class _InputScreenState extends State<InputScreen> {
                                     title: _altLosung[index].fieldName,
                                     fillColor: ColorConstant.white,
                                     filled: true,
+                                    textInputAction: TextInputAction.next,
                                     keyboardType: _altLosung[index].isNum
                                         ? TextInputType.number
                                         : null,
@@ -168,6 +170,9 @@ class _InputScreenState extends State<InputScreen> {
                                     title: _lichtLine[index].fieldName,
                                     fillColor: ColorConstant.white,
                                     filled: true,
+                                    textInputAction: index == _altLosung.length
+                                        ? TextInputAction.done
+                                        : TextInputAction.next,
                                     keyboardType: _lichtLine[index].isNum
                                         ? TextInputType.number
                                         : null,
@@ -205,15 +210,17 @@ class _InputScreenState extends State<InputScreen> {
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: ColorConstant.black,
         elevation: 10,
-        onPressed: () => {
-          print(_lichtLine)
-          // Navigator.pushNamed(context, RouteConstants.menuSelection)
-          // if (_formKey.currentState.validate())
-          //   {
+        onPressed: () {
+          if (_formKey.currentState.validate()) {
+            var dataProvider =
+                Provider.of<DataProvider>(context, listen: false);
+            dataProvider.setInputValues(_lichtLine, _altLosung);
 
-          //   }
-          // else
-          //   {print("false")}
+            
+            // Navigator.pushNamed(context, RouteConstants.menuSelection);
+          } else {
+            print("false");
+          }
         },
         label: Row(
           children: [
