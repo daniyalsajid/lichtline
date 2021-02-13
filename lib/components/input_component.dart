@@ -68,7 +68,7 @@ class TextInputComponent extends StatelessWidget {
         keyboardType: keyboardType,
         decoration: InputDecoration(
           prefixIcon: prefixIcon,
-          hintText: title,
+          labelText: title,
           fillColor: fillColor,
           filled: filled,
           suffixIcon: suffixIcon,

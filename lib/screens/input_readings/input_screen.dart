@@ -1,5 +1,4 @@
-import 'package:flutter/gestures.dart';
-import 'package:lichtline/components/buttons/button_component.dart';
+
 import 'package:lichtline/components/input_component.dart';
 import 'package:lichtline/components/text_component.dart';
 import 'package:lichtline/constants/colors/colors_constants.dart';
@@ -207,7 +206,8 @@ class _InputScreenState extends State<InputScreen> {
         backgroundColor: ColorConstant.black,
         elevation: 10,
         onPressed: () => {
-          Navigator.pushNamed(context, RouteConstants.menuSelection)
+          print(_lichtLine)
+          // Navigator.pushNamed(context, RouteConstants.menuSelection)
           // if (_formKey.currentState.validate())
           //   {
 
