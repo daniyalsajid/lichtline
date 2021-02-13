@@ -23,5 +23,5 @@ class RouteConstants {
   static const String inputScreen = 'inputScreen';
   static const String reviewScreen = 'reviewScreen';
   static const String menuSelection = 'menuSelection';
-  static const String paymentVerification = 'paymentVerification';
+  static const String economicCalculator = 'economicCalculator';
 }

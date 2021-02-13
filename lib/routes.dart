@@ -1,5 +1,6 @@
 import 'package:lichtline/screens/auth/login_screen.dart';
 import 'package:lichtline/screens/auth/signup_screen.dart';
+import 'package:lichtline/screens/economic_calculator/economic_calculator_screen.dart';
 import 'package:lichtline/screens/home/bottom_bar_screen.dart';
 import 'package:lichtline/screens/home/menu_selection_screen.dart';
 import 'package:lichtline/screens/input_readings/input_screen.dart';
@@ -33,10 +34,10 @@ onGenerateRoutes(RouteSettings settings) {
       return MaterialPageRoute(
         builder: (_) => MenuSelectionScreen(),
       );
-    // case RouteConstants.paymentVerification:
-    //   return MaterialPageRoute(
-    //     builder: (_) => PaymentVerificationScreen(),
-    //   );
+    case RouteConstants.economicCalculator:
+      return MaterialPageRoute(
+        builder: (_) => EconomicCalculator(),
+      );
     default:
   }
 }

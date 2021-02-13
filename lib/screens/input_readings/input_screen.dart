@@ -1,5 +1,3 @@
-import 'package:flutter/gestures.dart';
-import 'package:lichtline/components/buttons/button_component.dart';
 import 'package:lichtline/components/input_component.dart';
 import 'package:lichtline/components/text_component.dart';
 import 'package:lichtline/constants/colors/colors_constants.dart';
@@ -7,8 +5,10 @@ import 'package:lichtline/constants/routes/routes_constants.dart';
 import 'package:lichtline/constants/strings/string_constants.dart';
 import 'package:lichtline/constants/styles/font_styles_constants.dart';
 import 'package:lichtline/models/input_comparison_model.dart';
+import 'package:lichtline/providers/data_provider.dart';
 import 'package:lichtline/ui_utils/size_config.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class InputScreen extends StatefulWidget {
   @override
@@ -25,39 +25,49 @@ class _InputScreenState extends State<InputScreen> {
     _lichtLine.addAll(
       [
         InputModel(
-            fieldName: "Hours", value: "", isRequired: true, isNum: true),
-        InputModel(fieldName: "Days", value: "", isRequired: true, isNum: true),
+            fieldName: "Hours", value: "12", isRequired: true, isNum: true),
         InputModel(
-            fieldName: "Stuck", value: "", isRequired: true, isNum: true),
-        InputModel(fieldName: "Watt", value: "", isRequired: true, isNum: true),
+            fieldName: "Days", value: "365", isRequired: true, isNum: true),
         InputModel(
-            fieldName: "Price", value: "", isRequired: true, isNum: true),
+            fieldName: "Stuck", value: "10", isRequired: true, isNum: true),
+        InputModel(
+            fieldName: "Watt", value: "60", isRequired: true, isNum: true),
+        InputModel(
+            fieldName: "Price", value: "200", isRequired: true, isNum: true),
         InputModel(
             fieldName: "Maintenance P",
-            value: "",
+            value: "0",
             isRequired: true,
             isNum: true),
         InputModel(
-            fieldName: "Total hours", value: "", isRequired: true, isNum: true),
+            fieldName: "Total hours",
+            value: "50000",
+            isRequired: true,
+            isNum: true),
       ],
     );
     _altLosung.addAll(
       [
         InputModel(
-            fieldName: "Hours", value: "", isRequired: true, isNum: true),
-        InputModel(fieldName: "Days", value: "", isRequired: true, isNum: true),
+            fieldName: "Hours", value: "12", isRequired: true, isNum: true),
         InputModel(
-            fieldName: "Stuck", value: "", isRequired: true, isNum: true),
-        InputModel(fieldName: "Watt", value: "", isRequired: true, isNum: true),
+            fieldName: "Days", value: "365", isRequired: true, isNum: true),
         InputModel(
-            fieldName: "Price", value: "", isRequired: true, isNum: true),
+            fieldName: "Stuck", value: "10", isRequired: true, isNum: true),
+        InputModel(
+            fieldName: "Watt", value: "80", isRequired: true, isNum: true),
+        InputModel(
+            fieldName: "Price", value: "0", isRequired: true, isNum: true),
         InputModel(
             fieldName: "Maintenance P",
-            value: "",
+            value: "5",
             isRequired: true,
             isNum: true),
         InputModel(
-            fieldName: "Total hours", value: "", isRequired: true, isNum: true),
+            fieldName: "Total hours",
+            value: "10000",
+            isRequired: true,
+            isNum: true),
       ],
     );
   }
@@ -141,6 +151,7 @@ class _InputScreenState extends State<InputScreen> {
                                     title: _altLosung[index].fieldName,
                                     fillColor: ColorConstant.white,
                                     filled: true,
+                                    textInputAction: TextInputAction.next,
                                     keyboardType: _altLosung[index].isNum
                                         ? TextInputType.number
                                         : null,
@@ -169,6 +180,9 @@ class _InputScreenState extends State<InputScreen> {
                                     title: _lichtLine[index].fieldName,
                                     fillColor: ColorConstant.white,
                                     filled: true,
+                                    textInputAction: index == _altLosung.length
+                                        ? TextInputAction.done
+                                        : TextInputAction.next,
                                     keyboardType: _lichtLine[index].isNum
                                         ? TextInputType.number
                                         : null,
@@ -206,14 +220,15 @@ class _InputScreenState extends State<InputScreen> {
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: ColorConstant.black,
         elevation: 10,
-        onPressed: () => {
-          Navigator.pushNamed(context, RouteConstants.menuSelection)
-          // if (_formKey.currentState.validate())
-          //   {
-
-          //   }
-          // else
-          //   {print("false")}
+        onPressed: () {
+          // if (_formKey.currentState.validate()) {
+          var dataProvider = Provider.of<DataProvider>(context, listen: false);
+          dataProvider.setInputValues(_lichtLine, _altLosung);
+          dataProvider.calculateEnergyCosting();
+          // Navigator.pushNamed(context, RouteConstants.menuSelection);
+          // } else {
+          //   print("false");
+          // }
         },
         label: Row(
           children: [

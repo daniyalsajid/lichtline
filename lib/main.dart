@@ -1,6 +1,8 @@
+import 'package:lichtline/provider_initialize_list.dart';
 import 'package:lichtline/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:lichtline/splash_screen.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(MyApp());
@@ -9,17 +11,20 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'lichtline',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+    return MultiProvider(
+      providers: providersList(context),
+      child: MaterialApp(
+        title: 'lichtline',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        onGenerateRoute: (RouteSettings settings) {
+          return onGenerateRoutes(settings);
+        },
+        home: SplashScreen(),
+        debugShowCheckedModeBanner: false,
       ),
-      onGenerateRoute: (RouteSettings settings) {
-        return onGenerateRoutes(settings);
-      },
-      home: SplashScreen(),
-      debugShowCheckedModeBanner: false,
     );
   }
 }
