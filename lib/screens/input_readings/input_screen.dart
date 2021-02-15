@@ -225,6 +225,8 @@ class _InputScreenState extends State<InputScreen> {
           var dataProvider = Provider.of<DataProvider>(context, listen: false);
           dataProvider.setInputValues(_lichtLine, _altLosung);
           dataProvider.calculateEnergyCosting();
+          dataProvider.totalCarbonDioxide();
+          dataProvider.totalKw();
           // Navigator.pushNamed(context, RouteConstants.menuSelection);
           // } else {
           //   print("false");
