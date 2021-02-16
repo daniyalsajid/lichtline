@@ -1,3 +1,4 @@
+import 'package:lichtline/animation.dart';
 import 'package:lichtline/provider_initialize_list.dart';
 import 'package:lichtline/routes.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,8 @@ class MyApp extends StatelessWidget {
         onGenerateRoute: (RouteSettings settings) {
           return onGenerateRoutes(settings);
         },
-        home: SplashScreen(),
+        // home: SplashScreen(),
+        home: AnimationScreen(),
         debugShowCheckedModeBanner: false,
       ),
     );
