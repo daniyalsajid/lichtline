@@ -23,8 +23,8 @@ class MyApp extends StatelessWidget {
         onGenerateRoute: (RouteSettings settings) {
           return onGenerateRoutes(settings);
         },
-        // home: SplashScreen(),
-        home: AnimationScreen(),
+        home: SplashScreen(),
+        // home: AnimationScreen(),
         debugShowCheckedModeBanner: false,
       ),
     );

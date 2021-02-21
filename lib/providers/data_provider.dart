@@ -42,13 +42,37 @@ class DataProvider extends ChangeNotifier {
           double _newSubtractValue =
               _totalEnergyCosting[currentIndex - 2] - _tempCalValue;
           double _newValueForNextYear =
-              _newSubtractValue + _totalEnergyCosting[currentIndex - 2];
+              _newSubtractValue + _totalEnergyCosting[0];
           _totalEnergyCosting
               .add(double.parse(_newValueForNextYear.toStringAsFixed(2)));
         }
       }
     }
-    print(_totalEnergyCosting);
+    print("Energy Costing: " + _totalEnergyCosting.toString());
+    return _totalEnergyCosting;
+  }
+
+  totalCosting() {
+    List _totalCosting = [];
+    int _stuck = int.parse(_altLosung[2].value);
+    int _maintenanceP = int.parse(_altLosung[5].value);
+
+    var _totalEnergy = calculateEnergyCosting();
+    for (var i = 0; i < _totalEnergy.length; i++) {
+      if (i == 0) {
+        _totalCosting.add(_totalEnergy[i]);
+      } else {
+        int remainder = i % 2;
+        if (remainder == 0) {
+          _totalCosting.add(_totalCosting[i - 1] +
+              _totalEnergy[i + 1] +
+              _stuck * _maintenanceP);
+        } else {
+          _totalCosting.add(_totalCosting[i - 1] + _totalEnergy[i]);
+        }
+      }
+    }
+    print(_totalCosting);
   }
 
   totalCarbonDioxide() {
@@ -62,7 +86,7 @@ class DataProvider extends ChangeNotifier {
           (_hours * _days * _stuck * (_watt / 10000) * (486 / 100000)) * i;
       _totalCo2.add(tempCal);
     }
-    print(_totalCo2);
+    print("CO2: " + _totalCo2.toString());
   }
 
   totalKw() {
@@ -75,6 +99,6 @@ class DataProvider extends ChangeNotifier {
       double tempCal = (_hours * _days * _stuck * (_watt / 1000)) * i;
       _totalKw.add(tempCal);
     }
-    print(_totalKw);
+    print("KW: " + _totalKw.toString());
   }
 }
