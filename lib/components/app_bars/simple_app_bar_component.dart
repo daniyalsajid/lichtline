@@ -54,12 +54,14 @@ class SimpleAppBarComponent extends StatelessWidget
           // height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
           decoration: new BoxDecoration(
-              color: color,
-              borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(bottomLeftRadius),
-                  bottomRight: Radius.circular(bottomRightRadius))),
+            color: color,
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(bottomLeftRadius),
+              bottomRight: Radius.circular(bottomRightRadius),
+            ),
+          ),
           child: Padding(
-            padding: const EdgeInsets.only(top: 50.0, left: 16),
+            padding: const EdgeInsets.only(top: 20.0, left: 16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -156,16 +158,16 @@ class SimpleAppBarComponent extends StatelessWidget
                     )
                   ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 23, top: 8),
-                  child: TextComponent(
-                    text: subtile,
-                    textStyle: FontStyles.abrilFatface(
-                        color: ColorConstant.black,
-                        fontSize: 10.0,
-                        fontWeight: FontWeight.w300),
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.only(left: 23, top: 8),
+                //   child: TextComponent(
+                //     text: subtile,
+                //     textStyle: FontStyles.abrilFatface(
+                //         color: ColorConstant.black,
+                //         fontSize: 10.0,
+                //         fontWeight: FontWeight.w300),
+                //   ),
+                // ),
               ],
             ),
           ),

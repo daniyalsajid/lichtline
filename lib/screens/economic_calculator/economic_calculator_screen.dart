@@ -14,9 +14,10 @@ class EconomicCalculator extends StatelessWidget {
       appBar: SimpleAppBarComponent(
         title: "We",
         titleStyle: FontStyles.inter(
-            color: ColorConstant.white,
-            fontSize: 16,
-            fontWeight: FontWeight.bold),
+          color: ColorConstant.white,
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+        ),
         color: ColorConstant.black,
       ),
       body: Container(
