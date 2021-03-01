@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:provider/provider.dart';
+import '../../providers/data_provider.dart';
 
 class EconomicCalculator extends StatefulWidget {
   //
@@ -13,42 +15,43 @@ class EconomicCalculator extends StatefulWidget {
 }
 
 class EconomicCalculatorState extends State<EconomicCalculator> {
-  //
   List<charts.Series> seriesList;
-
-  static List<charts.Series<Sales, String>> _createRandomData() {
+  DataProvider dataProvider;
+  List<charts.Series<Sales, String>> _createRandomData() {
     final random = Random();
+    var lichtLine = dataProvider.calculateEnergyCosting(dataProvider.lichtLine);
+    var altLousung =
+        dataProvider.calculateEnergyCosting(dataProvider.altLosung);
+    // final desktopSalesData = [
+    //   Sales('2015', random.nextInt(10)),
+    //   Sales('2016', random.nextInt(10)),
+    //   Sales('2017', random.nextInt(100)),
+    //   Sales('2018', random.nextInt(100)),
+    //   Sales('2019', random.nextInt(100)),
+    // ];
 
-    final desktopSalesData = [
-      Sales('2015', random.nextInt(10)),
-      Sales('2016', random.nextInt(10)),
-      Sales('2017', random.nextInt(100)),
-      Sales('2018', random.nextInt(100)),
-      Sales('2019', random.nextInt(100)),
-    ];
+    // final tabletSalesData = [
+    //   Sales('2015', random.nextInt(10)),
+    //   Sales('2016', random.nextInt(10)),
+    //   Sales('2017', random.nextInt(100)),
+    //   Sales('2018', random.nextInt(100)),
+    //   Sales('2019', random.nextInt(100)),
+    // ];
 
-    final tabletSalesData = [
-      Sales('2015', random.nextInt(10)),
-      Sales('2016', random.nextInt(10)),
-      Sales('2017', random.nextInt(100)),
-      Sales('2018', random.nextInt(100)),
-      Sales('2019', random.nextInt(100)),
-    ];
-
-    final mobileSalesData = [
-      Sales('2015', random.nextInt(100)),
-      Sales('2016', random.nextInt(100)),
-      Sales('2017', random.nextInt(100)),
-      Sales('2018', random.nextInt(100)),
-      Sales('2019', random.nextInt(100)),
-    ];
+    // final mobileSalesData = [
+    //   Sales('2015', random.nextInt(100)),
+    //   Sales('2016', random.nextInt(100)),
+    //   Sales('2017', random.nextInt(100)),
+    //   Sales('2018', random.nextInt(100)),
+    //   Sales('2019', random.nextInt(100)),
+    // ];
 
     return [
       charts.Series<Sales, String>(
         id: 'Sales',
         domainFn: (Sales sales, _) => sales.year,
         measureFn: (Sales sales, _) => sales.sales,
-        data: desktopSalesData,
+        data: lichtLine,
         fillColorFn: (Sales sales, _) {
           return charts.MaterialPalette.yellow.shadeDefault;
         },
@@ -57,20 +60,20 @@ class EconomicCalculatorState extends State<EconomicCalculator> {
         id: 'Sales',
         domainFn: (Sales sales, _) => sales.year,
         measureFn: (Sales sales, _) => sales.sales,
-        data: tabletSalesData,
+        data: altLousung,
         fillColorFn: (Sales sales, _) {
           return charts.MaterialPalette.black;
         },
       ),
-      charts.Series<Sales, String>(
-        id: 'Sales',
-        domainFn: (Sales sales, _) => sales.year,
-        measureFn: (Sales sales, _) => sales.sales,
-        data: mobileSalesData,
-        fillColorFn: (Sales sales, _) {
-          return charts.MaterialPalette.teal.shadeDefault;
-        },
-      )
+      // charts.Series<Sales, String>(
+      //   id: 'Sales',
+      //   domainFn: (Sales sales, _) => sales.year,
+      //   measureFn: (Sales sales, _) => sales.sales,
+      //   data: mobileSalesData,
+      //   fillColorFn: (Sales sales, _) {
+      //     return charts.MaterialPalette.teal.shadeDefault;
+      //   },
+      // )
     ];
   }
 
@@ -93,6 +96,7 @@ class EconomicCalculatorState extends State<EconomicCalculator> {
   @override
   void initState() {
     super.initState();
+    dataProvider = Provider.of<DataProvider>(context, listen: false);
     seriesList = _createRandomData();
   }
 
@@ -112,7 +116,7 @@ class EconomicCalculatorState extends State<EconomicCalculator> {
 
 class Sales {
   final String year;
-  final int sales;
+  final double sales;
 
   Sales(this.year, this.sales);
 }

@@ -7,7 +7,7 @@ class DataProvider extends ChangeNotifier {
   int _month = 12;
   int _year = 12;
   double _electricityCostEuroKWH = 0.18;
-
+  DateTime _dateTime = new DateTime.now();
   List<InputModel> _lichtLine;
   List<InputModel> _altLosung;
 
@@ -27,7 +27,7 @@ class DataProvider extends ChangeNotifier {
     int _days = int.parse(_valuesForCalculation[1].value);
     int hoursToYearsForMaintenancePrice =
         ((_totalHours / _days) / _hours).round();
-    List _totalEnergyCosting = [];
+    List<Sales> _totalEnergyCosting = [];
     for (int i = 0; i <= _year; i++) {
       double _tempCalValue;
       if (i != 0) {
@@ -39,18 +39,25 @@ class DataProvider extends ChangeNotifier {
             (1 + pow((hoursToYearsForMaintenancePrice / 100), i));
         if (i == 1) {
           _totalEnergyCosting.add(
-            double.parse(
-              _tempCalValue.toStringAsFixed(2),
-            ),
+            Sales(
+                _dateTime.year.toString(),
+                double.parse(
+                  _tempCalValue.toStringAsFixed(2),
+                )),
           );
         } else {
           int currentIndex = i;
           double _newSubtractValue =
-              _totalEnergyCosting[currentIndex - 2] - _tempCalValue;
+              _totalEnergyCosting[currentIndex - 2].values - _tempCalValue;
           double _newValueForNextYear =
-              _newSubtractValue + _totalEnergyCosting[0];
-          _totalEnergyCosting
-              .add(double.parse(_newValueForNextYear.toStringAsFixed(2)));
+              _newSubtractValue + _totalEnergyCosting[0].values;
+          _totalEnergyCosting.add(
+            Sales(
+                _dateTime.year.toString(),
+                double.parse(
+                  _newValueForNextYear.toStringAsFixed(2),
+                )),
+          );
         }
       }
     }
@@ -107,4 +114,11 @@ class DataProvider extends ChangeNotifier {
     }
     print("KW: " + _totalKw.toString());
   }
+}
+
+class Sales {
+  final String year;
+  final double values;
+
+  Sales(this.year, this.values);
 }

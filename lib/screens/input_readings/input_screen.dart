@@ -222,8 +222,8 @@ class _InputScreenState extends State<InputScreen> {
         elevation: 10,
         onPressed: () {
           // if (_formKey.currentState.validate()) {
-          // var dataProvider = Provider.of<DataProvider>(context, listen: false);
-          // dataProvider.setInputValues(_lichtLine, _altLosung);
+          var dataProvider = Provider.of<DataProvider>(context, listen: false);
+          dataProvider.setInputValues(_lichtLine, _altLosung);
           // dataProvider.calculateEnergyCosting();
           // dataProvider.totalCarbonDioxide();
           // dataProvider.totalKw();
