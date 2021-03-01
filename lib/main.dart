@@ -1,4 +1,5 @@
 import 'package:lichtline/animation.dart';
+import 'package:lichtline/constants/colors/colors_constants.dart';
 import 'package:lichtline/provider_initialize_list.dart';
 import 'package:lichtline/routes.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,8 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'lichtline',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: ColorConstant.kPrimaryColor,
+          primaryColor: ColorConstant.kPrimaryColor,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         onGenerateRoute: (RouteSettings settings) {

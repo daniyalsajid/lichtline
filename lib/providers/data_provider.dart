@@ -48,12 +48,12 @@ class DataProvider extends ChangeNotifier {
         } else {
           int currentIndex = i;
           double _newSubtractValue =
-              _totalEnergyCosting[currentIndex - 2].values - _tempCalValue;
+              _totalEnergyCosting[currentIndex - 2].sales - _tempCalValue;
           double _newValueForNextYear =
-              _newSubtractValue + _totalEnergyCosting[0].values;
+              _newSubtractValue + _totalEnergyCosting[0].sales;
           _totalEnergyCosting.add(
             Sales(
-                _dateTime.year.toString(),
+                (_dateTime.year + i).toString(),
                 double.parse(
                   _newValueForNextYear.toStringAsFixed(2),
                 )),
@@ -118,7 +118,7 @@ class DataProvider extends ChangeNotifier {
 
 class Sales {
   final String year;
-  final double values;
+  final double sales;
 
-  Sales(this.year, this.values);
+  Sales(this.year, this.sales);
 }

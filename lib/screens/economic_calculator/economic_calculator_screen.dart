@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:lichtline/components/app_bars/simple_app_bar_component.dart';
+import 'package:lichtline/constants/colors/colors_constants.dart';
+import 'package:lichtline/constants/styles/font_styles_constants.dart';
 import 'package:provider/provider.dart';
 import '../../providers/data_provider.dart';
 
 class EconomicCalculator extends StatefulWidget {
-  //
-  EconomicCalculator() : super();
-
-  final String title = "Charts Demo";
-
   @override
   EconomicCalculatorState createState() => EconomicCalculatorState();
 }
@@ -18,78 +16,50 @@ class EconomicCalculatorState extends State<EconomicCalculator> {
   List<charts.Series> seriesList;
   DataProvider dataProvider;
   List<charts.Series<Sales, String>> _createRandomData() {
-    final random = Random();
-    var lichtLine = dataProvider.calculateEnergyCosting(dataProvider.lichtLine);
-    var altLousung =
+    final lichtLine =
+        dataProvider.calculateEnergyCosting(dataProvider.lichtLine);
+    final altLousung =
         dataProvider.calculateEnergyCosting(dataProvider.altLosung);
-    // final desktopSalesData = [
-    //   Sales('2015', random.nextInt(10)),
-    //   Sales('2016', random.nextInt(10)),
-    //   Sales('2017', random.nextInt(100)),
-    //   Sales('2018', random.nextInt(100)),
-    //   Sales('2019', random.nextInt(100)),
-    // ];
-
-    // final tabletSalesData = [
-    //   Sales('2015', random.nextInt(10)),
-    //   Sales('2016', random.nextInt(10)),
-    //   Sales('2017', random.nextInt(100)),
-    //   Sales('2018', random.nextInt(100)),
-    //   Sales('2019', random.nextInt(100)),
-    // ];
-
-    // final mobileSalesData = [
-    //   Sales('2015', random.nextInt(100)),
-    //   Sales('2016', random.nextInt(100)),
-    //   Sales('2017', random.nextInt(100)),
-    //   Sales('2018', random.nextInt(100)),
-    //   Sales('2019', random.nextInt(100)),
-    // ];
-
     return [
       charts.Series<Sales, String>(
-        id: 'Sales',
+        id: 'lichtline',
         domainFn: (Sales sales, _) => sales.year,
         measureFn: (Sales sales, _) => sales.sales,
         data: lichtLine,
         fillColorFn: (Sales sales, _) {
-          return charts.MaterialPalette.yellow.shadeDefault;
+          return charts.MaterialPalette.black;
         },
       ),
       charts.Series<Sales, String>(
-        id: 'Sales',
+        id: 'alt-lousung',
         domainFn: (Sales sales, _) => sales.year,
         measureFn: (Sales sales, _) => sales.sales,
         data: altLousung,
         fillColorFn: (Sales sales, _) {
-          return charts.MaterialPalette.black;
+          return charts.MaterialPalette.gray.shadeDefault;
         },
       ),
-      // charts.Series<Sales, String>(
-      //   id: 'Sales',
-      //   domainFn: (Sales sales, _) => sales.year,
-      //   measureFn: (Sales sales, _) => sales.sales,
-      //   data: mobileSalesData,
-      //   fillColorFn: (Sales sales, _) {
-      //     return charts.MaterialPalette.teal.shadeDefault;
-      //   },
-      // )
     ];
   }
 
   barChart() {
-    return charts.BarChart(
+    return new charts.BarChart(
       seriesList,
-      animate: true,
-      vertical: true,
-      barGroupingType: charts.BarGroupingType.groupedStacked,
+      vertical: false,
+      barGroupingType: charts.BarGroupingType.grouped,
+      behaviors: [
+        new charts.SeriesLegend(
+          outsideJustification: charts.OutsideJustification.endDrawArea,
+          horizontalFirst: false,
+          desiredMaxRows: 2,
+          cellPadding: new EdgeInsets.only(right: 4.0, bottom: 2.0),
+          entryTextStyle:
+              charts.TextStyleSpec(fontFamily: 'Georgia', fontSize: 14),
+        )
+      ],
       defaultRenderer: charts.BarRendererConfig(
-        groupingType: charts.BarGroupingType.grouped,
-        strokeWidthPx: 1.0,
-      ),
-      domainAxis: charts.OrdinalAxisSpec(
-        renderSpec: charts.NoneRenderSpec(),
-      ),
+          symbolRenderer: new IconRenderer(Icons.circle)),
+      domainAxis: charts.OrdinalAxisSpec(showAxisLine: true),
     );
   }
 
@@ -103,8 +73,13 @@ class EconomicCalculatorState extends State<EconomicCalculator> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
+      appBar: SimpleAppBarComponent(
+        title: "Wirtschaftlichkeitsrechner",
+        titleStyle: FontStyles.inter(
+            color: ColorConstant.white,
+            fontSize: 18,
+            fontWeight: FontWeight.w600),
+        color: ColorConstant.black,
       ),
       body: Container(
         padding: EdgeInsets.all(20.0),
@@ -114,9 +89,18 @@ class EconomicCalculatorState extends State<EconomicCalculator> {
   }
 }
 
-class Sales {
-  final String year;
-  final double sales;
-
-  Sales(this.year, this.sales);
+class IconRenderer extends charts.CustomSymbolRenderer {
+  final IconData iconData;
+  IconRenderer(this.iconData);
+  @override
+  Widget build(BuildContext context, {Size size, Color color, bool enabled}) {
+    if (!enabled) {
+      color = ColorConstant.brownGrey.withOpacity(0.26);
+    }
+    //  else {
+    //   color = ColorConstant.black;
+    // }
+    return new SizedBox.fromSize(
+        size: size, child: new Icon(iconData, color: color, size: 14.0));
+  }
 }
