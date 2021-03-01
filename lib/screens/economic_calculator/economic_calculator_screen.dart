@@ -1,95 +1,118 @@
 import 'package:flutter/material.dart';
-import 'package:lichtline/components/app_bars/simple_app_bar_component.dart';
-import 'package:lichtline/constants/colors/colors_constants.dart';
-import 'package:lichtline/constants/styles/font_styles_constants.dart';
-import 'package:lichtline/ui_utils/size_config.dart';
+import 'dart:math';
+import 'package:charts_flutter/flutter.dart' as charts;
 
-class EconomicCalculator extends StatelessWidget {
-  const EconomicCalculator({Key key}) : super(key: key);
+class EconomicCalculator extends StatefulWidget {
+  //
+  EconomicCalculator() : super();
+
+  final String title = "Charts Demo";
 
   @override
-  Widget build(BuildContext context) {
-    SizeConfig().init(context);
-    return Scaffold(
-      appBar: SimpleAppBarComponent(
-        title: "We",
-        titleStyle: FontStyles.inter(
-          color: ColorConstant.white,
-          fontSize: 16,
-          fontWeight: FontWeight.bold,
-        ),
-        color: ColorConstant.black,
+  EconomicCalculatorState createState() => EconomicCalculatorState();
+}
+
+class EconomicCalculatorState extends State<EconomicCalculator> {
+  //
+  List<charts.Series> seriesList;
+
+  static List<charts.Series<Sales, String>> _createRandomData() {
+    final random = Random();
+
+    final desktopSalesData = [
+      Sales('2015', random.nextInt(10)),
+      Sales('2016', random.nextInt(10)),
+      Sales('2017', random.nextInt(100)),
+      Sales('2018', random.nextInt(100)),
+      Sales('2019', random.nextInt(100)),
+    ];
+
+    final tabletSalesData = [
+      Sales('2015', random.nextInt(10)),
+      Sales('2016', random.nextInt(10)),
+      Sales('2017', random.nextInt(100)),
+      Sales('2018', random.nextInt(100)),
+      Sales('2019', random.nextInt(100)),
+    ];
+
+    final mobileSalesData = [
+      Sales('2015', random.nextInt(100)),
+      Sales('2016', random.nextInt(100)),
+      Sales('2017', random.nextInt(100)),
+      Sales('2018', random.nextInt(100)),
+      Sales('2019', random.nextInt(100)),
+    ];
+
+    return [
+      charts.Series<Sales, String>(
+        id: 'Sales',
+        domainFn: (Sales sales, _) => sales.year,
+        measureFn: (Sales sales, _) => sales.sales,
+        data: desktopSalesData,
+        fillColorFn: (Sales sales, _) {
+          return charts.MaterialPalette.yellow.shadeDefault;
+        },
       ),
-      body: Container(
-        width: SizeConfig.screenWidth,
-        height: SizeConfig.screenHeight,
-        child: Column(
-          children: [
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: DataTable(
-                columns: <DataColumn>[
-                  DataColumn(
-                    numeric: true,
-                    label: Text(
-                      '',
-                    ),
-                  ),
-                  DataColumn(
-                    label: Text(
-                      'Gesamtkosten',
-                    ),
-                  ),
-                  DataColumn(
-                    label: Text(
-                      'Ersatzkosten',
-                    ),
-                  ),
-                  DataColumn(
-                    label: Text(
-                      'Energiekosten',
-                    ),
-                  ),
-                  DataColumn(
-                    label: Text(
-                      'Energieverbrauch kum',
-                    ),
-                  ),
-                  DataColumn(
-                    label: Text(
-                      'CO2-Verbrauch kum',
-                    ),
-                  ),
-                ],
-                rows: <DataRow>[
-                  DataRow(
-                    cells: <DataCell>[
-                      DataCell(
-                        Text('0'),
-                      ),
-                      DataCell(
-                        Text('52,348.03 €'),
-                      ),
-                      DataCell(
-                        Text('52,348.03 €'),
-                      ),
-                      DataCell(
-                        Text(''),
-                      ),
-                      DataCell(
-                        Text('138.57 t'),
-                      ),
-                      DataCell(
-                        Text('138.57 t'),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
+      charts.Series<Sales, String>(
+        id: 'Sales',
+        domainFn: (Sales sales, _) => sales.year,
+        measureFn: (Sales sales, _) => sales.sales,
+        data: tabletSalesData,
+        fillColorFn: (Sales sales, _) {
+          return charts.MaterialPalette.black;
+        },
+      ),
+      charts.Series<Sales, String>(
+        id: 'Sales',
+        domainFn: (Sales sales, _) => sales.year,
+        measureFn: (Sales sales, _) => sales.sales,
+        data: mobileSalesData,
+        fillColorFn: (Sales sales, _) {
+          return charts.MaterialPalette.teal.shadeDefault;
+        },
+      )
+    ];
+  }
+
+  barChart() {
+    return charts.BarChart(
+      seriesList,
+      animate: true,
+      vertical: true,
+      barGroupingType: charts.BarGroupingType.groupedStacked,
+      defaultRenderer: charts.BarRendererConfig(
+        groupingType: charts.BarGroupingType.grouped,
+        strokeWidthPx: 1.0,
+      ),
+      domainAxis: charts.OrdinalAxisSpec(
+        renderSpec: charts.NoneRenderSpec(),
       ),
     );
   }
+
+  @override
+  void initState() {
+    super.initState();
+    seriesList = _createRandomData();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+      body: Container(
+        padding: EdgeInsets.all(20.0),
+        child: barChart(),
+      ),
+    );
+  }
+}
+
+class Sales {
+  final String year;
+  final int sales;
+
+  Sales(this.year, this.sales);
 }
