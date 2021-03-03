@@ -224,11 +224,11 @@ class _InputScreenState extends State<InputScreen> {
           // if (_formKey.currentState.validate()) {
           var dataProvider = Provider.of<DataProvider>(context, listen: false);
           dataProvider.setInputValues(_lichtLine, _altLosung);
-          dataProvider.calculateEnergyCosting();
-          dataProvider.totalCarbonDioxide();
-          dataProvider.totalKw();
-          dataProvider.totalCosting();
-          // Navigator.pushNamed(context, RouteConstants.menuSelection);
+          // dataProvider.calculateEnergyCosting();
+          // dataProvider.totalCarbonDioxide();
+          // dataProvider.totalKw();
+          // dataProvider.totalCosting();
+          Navigator.pushNamed(context, RouteConstants.menuSelection);
           // } else {
           //   print("false");
           // }

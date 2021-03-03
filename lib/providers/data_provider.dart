@@ -5,11 +5,9 @@ import 'package:lichtline/models/input_comparison_model.dart';
 
 class DataProvider extends ChangeNotifier {
   int _month = 12;
-  int _days = 365;
-  int _yearIncrementPercent = 2;
   int _year = 12;
   double _electricityCostEuroKWH = 0.18;
-
+  DateTime _dateTime = new DateTime.now();
   List<InputModel> _lichtLine;
   List<InputModel> _altLosung;
 
@@ -21,10 +19,15 @@ class DataProvider extends ChangeNotifier {
     _altLosung = _alt;
   }
 
-  calculateEnergyCosting() {
-    int _stuck = int.parse(_altLosung[2].value);
-    int _watt = int.parse(_altLosung[3].value);
-    List _totalEnergyCosting = [];
+  calculateEnergyCosting(List<InputModel> _valuesForCalculation) {
+    int _stuck = int.parse(_valuesForCalculation[2].value);
+    int _watt = int.parse(_valuesForCalculation[3].value);
+    int _hours = int.parse(_valuesForCalculation[0].value);
+    int _totalHours = int.parse(_valuesForCalculation[6].value);
+    int _days = int.parse(_valuesForCalculation[1].value);
+    int hoursToYearsForMaintenancePrice =
+        ((_totalHours / _days) / _hours).round();
+    List<Sales> _totalEnergyCosting = [];
     for (int i = 0; i <= _year; i++) {
       double _tempCalValue;
       if (i != 0) {
@@ -33,18 +36,28 @@ class DataProvider extends ChangeNotifier {
             _stuck *
             (_watt / 1000) *
             _electricityCostEuroKWH *
-            (1 + pow((_yearIncrementPercent / 100), i));
+            (1 + pow((hoursToYearsForMaintenancePrice / 100), i));
         if (i == 1) {
-          _totalEnergyCosting
-              .add(double.parse(_tempCalValue.toStringAsFixed(2)));
+          _totalEnergyCosting.add(
+            Sales(
+                _dateTime.year.toString(),
+                double.parse(
+                  _tempCalValue.toStringAsFixed(2),
+                )),
+          );
         } else {
           int currentIndex = i;
           double _newSubtractValue =
-              _totalEnergyCosting[currentIndex - 2] - _tempCalValue;
+              _totalEnergyCosting[currentIndex - 2].sales - _tempCalValue;
           double _newValueForNextYear =
-              _newSubtractValue + _totalEnergyCosting[0];
-          _totalEnergyCosting
-              .add(double.parse(_newValueForNextYear.toStringAsFixed(2)));
+              _newSubtractValue + _totalEnergyCosting[0].sales;
+          _totalEnergyCosting.add(
+            Sales(
+                (_dateTime.year + i).toString(),
+                double.parse(
+                  _newValueForNextYear.toStringAsFixed(2),
+                )),
+          );
         }
       }
     }
@@ -52,12 +65,12 @@ class DataProvider extends ChangeNotifier {
     return _totalEnergyCosting;
   }
 
-  totalCosting() {
+  totalCosting(List<InputModel> _valuesForCalculation) {
     List _totalCosting = [];
-    int _stuck = int.parse(_altLosung[2].value);
-    int _maintenanceP = int.parse(_altLosung[5].value);
+    int _stuck = int.parse(_valuesForCalculation[2].value);
+    int _maintenanceP = int.parse(_valuesForCalculation[5].value);
 
-    var _totalEnergy = calculateEnergyCosting();
+    var _totalEnergy = calculateEnergyCosting(_valuesForCalculation);
     for (var i = 0; i < _totalEnergy.length; i++) {
       if (i == 0) {
         _totalCosting.add(_totalEnergy[i]);
@@ -75,11 +88,11 @@ class DataProvider extends ChangeNotifier {
     print(_totalCosting);
   }
 
-  totalCarbonDioxide() {
-    int _hours = int.parse(_altLosung[0].value);
-    int _days = int.parse(_altLosung[1].value);
-    int _stuck = int.parse(_altLosung[2].value);
-    int _watt = int.parse(_altLosung[3].value);
+  totalCarbonDioxide(List<InputModel> _valuesForCalculation) {
+    int _hours = int.parse(_valuesForCalculation[0].value);
+    int _days = int.parse(_valuesForCalculation[1].value);
+    int _stuck = int.parse(_valuesForCalculation[2].value);
+    int _watt = int.parse(_valuesForCalculation[3].value);
     List _totalCo2 = [];
     for (int i = 1; i <= _year; i++) {
       double tempCal =
@@ -89,11 +102,11 @@ class DataProvider extends ChangeNotifier {
     print("CO2: " + _totalCo2.toString());
   }
 
-  totalKw() {
-    int _hours = int.parse(_altLosung[0].value);
-    int _days = int.parse(_altLosung[1].value);
-    int _stuck = int.parse(_altLosung[2].value);
-    int _watt = int.parse(_altLosung[3].value);
+  totalKw(List<InputModel> _valuesForCalculation) {
+    int _hours = int.parse(_valuesForCalculation[0].value);
+    int _days = int.parse(_valuesForCalculation[1].value);
+    int _stuck = int.parse(_valuesForCalculation[2].value);
+    int _watt = int.parse(_valuesForCalculation[3].value);
     List _totalKw = [];
     for (int i = 1; i <= _year; i++) {
       double tempCal = (_hours * _days * _stuck * (_watt / 1000)) * i;
@@ -101,4 +114,11 @@ class DataProvider extends ChangeNotifier {
     }
     print("KW: " + _totalKw.toString());
   }
+}
+
+class Sales {
+  final String year;
+  final double sales;
+
+  Sales(this.year, this.sales);
 }
