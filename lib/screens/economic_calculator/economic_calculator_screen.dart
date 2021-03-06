@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:math';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:lichtline/components/app_bars/simple_app_bar_component.dart';
 import 'package:lichtline/constants/colors/colors_constants.dart';
@@ -31,7 +30,7 @@ class EconomicCalculatorState extends State<EconomicCalculator> {
         },
       ),
       charts.Series<Sales, String>(
-        id: 'alt-lousung',
+        id: dataProvider.companyName,
         domainFn: (Sales sales, _) => sales.year,
         measureFn: (Sales sales, _) => sales.sales,
         data: altLousung,
@@ -58,7 +57,8 @@ class EconomicCalculatorState extends State<EconomicCalculator> {
         )
       ],
       defaultRenderer: charts.BarRendererConfig(
-          symbolRenderer: new IconRenderer(Icons.circle)),
+        symbolRenderer: new IconRenderer(Icons.circle),
+      ),
       domainAxis: charts.OrdinalAxisSpec(showAxisLine: true),
     );
   }

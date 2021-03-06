@@ -7,12 +7,17 @@ class DataProvider extends ChangeNotifier {
   int _month = 12;
   int _year = 12;
   double _electricityCostEuroKWH = 0.18;
+  String companyName;
   DateTime _dateTime = new DateTime.now();
   List<InputModel> _lichtLine;
   List<InputModel> _altLosung;
 
   List<InputModel> get lichtLine => _lichtLine;
   List<InputModel> get altLosung => _altLosung;
+
+  setCompanyName(String _companyName) {
+    this.companyName = _companyName;
+  }
 
   void setInputValues(List<InputModel> _licht, List<InputModel> _alt) {
     _lichtLine = _licht;

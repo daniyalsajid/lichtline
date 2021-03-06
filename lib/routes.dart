@@ -3,6 +3,7 @@ import 'package:lichtline/screens/auth/signup_screen.dart';
 import 'package:lichtline/screens/economic_calculator/economic_calculator_screen.dart';
 import 'package:lichtline/screens/home/bottom_bar_screen.dart';
 import 'package:lichtline/screens/home/menu_selection_screen.dart';
+import 'package:lichtline/screens/input_readings/company_name_screen.dart';
 import 'package:lichtline/screens/input_readings/input_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:lichtline/splash_screen.dart';
@@ -37,6 +38,10 @@ onGenerateRoutes(RouteSettings settings) {
     case RouteConstants.economicCalculator:
       return MaterialPageRoute(
         builder: (_) => EconomicCalculator(),
+      );
+    case RouteConstants.companyNameScreen:
+      return MaterialPageRoute(
+        builder: (_) => CompanyNameScreen(),
       );
     default:
   }

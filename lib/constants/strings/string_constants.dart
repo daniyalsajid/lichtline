@@ -29,6 +29,7 @@ class StringConstant {
   static const String email = "Email";
   static const String name = "name";
   static const String username = "username";
+  static const String companyName = "Company Name";
   static const String phoneNumber = "Phone Number";
   static const String otpVerification = "OTP Verification";
   static const String verifyOtpToCreateAnAccount =

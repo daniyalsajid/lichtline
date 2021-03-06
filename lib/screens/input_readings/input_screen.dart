@@ -19,9 +19,11 @@ class _InputScreenState extends State<InputScreen> {
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   List<InputModel> _lichtLine = new List<InputModel>();
   List<InputModel> _altLosung = new List<InputModel>();
+  DataProvider _dataProvider;
   @override
   void initState() {
     super.initState();
+    _dataProvider = Provider.of<DataProvider>(context, listen: false);
     _lichtLine.addAll(
       [
         InputModel(
@@ -117,7 +119,7 @@ class _InputScreenState extends State<InputScreen> {
                                 Visibility(
                                   visible: index == 0,
                                   child: TextComponent(
-                                    text: StringConstant.altLosung,
+                                    text: _dataProvider.companyName,
                                     textStyle: FontStyles.inter(
                                         color: ColorConstant.black,
                                         fontSize: 18,
