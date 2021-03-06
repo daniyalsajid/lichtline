@@ -4,9 +4,7 @@ import 'package:lichtline/constants/colors/colors_constants.dart';
 import 'package:lichtline/constants/routes/routes_constants.dart';
 import 'package:lichtline/constants/strings/string_constants.dart';
 import 'package:lichtline/constants/styles/font_styles_constants.dart';
-import 'package:lichtline/providers/data_provider.dart';
 import 'package:lichtline/ui_utils/size_config.dart';
-import 'package:provider/provider.dart';
 
 class MenuSelectionScreen extends StatefulWidget {
   @override
@@ -85,6 +83,9 @@ var btnList = [
     "title": StringConstant.wirtschaftlichkeitsrechner,
     "route": RouteConstants.economicCalculator,
   },
-  {"title": StringConstant.zertifikat, "route": ""},
+  {
+    "title": StringConstant.zertifikat,
+    "route": RouteConstants.certificateScreen
+  },
   {"title": StringConstant.schlusselfaktoren, "route": ""},
 ];

@@ -98,13 +98,20 @@ class DataProvider extends ChangeNotifier {
     int _days = int.parse(_valuesForCalculation[1].value);
     int _stuck = int.parse(_valuesForCalculation[2].value);
     int _watt = int.parse(_valuesForCalculation[3].value);
-    List _totalCo2 = [];
+    List<Sales> _totalCo2 = [];
     for (int i = 1; i <= _year; i++) {
       double tempCal =
           (_hours * _days * _stuck * (_watt / 10000) * (486 / 100000)) * i;
-      _totalCo2.add(tempCal);
+      _totalCo2.add(
+        Sales(
+          (_dateTime.year + i - 1).toString(),
+          tempCal,
+        ),
+      );
+      // _totalCo2.add(tempCal);
     }
     print("CO2: " + _totalCo2.toString());
+    return _totalCo2;
   }
 
   totalKw(List<InputModel> _valuesForCalculation) {
