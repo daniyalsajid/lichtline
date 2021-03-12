@@ -1,14 +1,11 @@
 import 'package:flutter/gestures.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:lichtline/components/buttons/button_component.dart';
 import 'package:lichtline/components/input_component.dart';
 import 'package:lichtline/components/text_component.dart';
-import 'package:lichtline/constants/assets/assets_constants.dart';
 import 'package:lichtline/constants/colors/colors_constants.dart';
 import 'package:lichtline/constants/routes/routes_constants.dart';
 import 'package:lichtline/constants/strings/string_constants.dart';
 import 'package:lichtline/constants/styles/font_styles_constants.dart';
-import 'package:lichtline/constants/styles/widgets_decoration_constant.dart';
 import 'package:lichtline/ui_utils/size_config.dart';
 import 'package:flutter/material.dart';
 
@@ -99,7 +96,8 @@ class _LoginScreenState extends State<LoginScreen>
               ),
               ButtonComponent(
                 onPressed: () => {
-                  Navigator.pushNamed(context, RouteConstants.inputScreen),
+                  Navigator.pushNamed(
+                      context, RouteConstants.companyNameScreen),
                 },
                 buttonText: StringConstant.login,
                 color: ColorConstant.black,

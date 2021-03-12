@@ -6,19 +6,17 @@ import 'package:lichtline/constants/styles/font_styles_constants.dart';
 import 'package:provider/provider.dart';
 import '../../providers/data_provider.dart';
 
-class EconomicCalculatorScreen extends StatefulWidget {
+class CertificateScreen extends StatefulWidget {
   @override
-  EconomicCalculatorScreenState createState() => EconomicCalculatorScreenState();
+  CertificateScreenState createState() => CertificateScreenState();
 }
 
-class EconomicCalculatorScreenState extends State<EconomicCalculatorScreen> {
+class CertificateScreenState extends State<CertificateScreen> {
   List<charts.Series> seriesList;
   DataProvider dataProvider;
   List<charts.Series<Sales, String>> _createRandomData() {
-    final lichtLine =
-        dataProvider.calculateEnergyCosting(dataProvider.lichtLine);
-    final altLousung =
-        dataProvider.calculateEnergyCosting(dataProvider.altLosung);
+    final lichtLine = dataProvider.totalCarbonDioxide(dataProvider.lichtLine);
+    final altLousung = dataProvider.totalCarbonDioxide(dataProvider.altLosung);
     return [
       charts.Series<Sales, String>(
         id: 'lichtline',
@@ -74,7 +72,7 @@ class EconomicCalculatorScreenState extends State<EconomicCalculatorScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: SimpleAppBarComponent(
-        title: "Wirtschaftlichkeitsrechner",
+        title: "Zertifikat",
         titleStyle: FontStyles.inter(
             color: ColorConstant.white,
             fontSize: 18,
