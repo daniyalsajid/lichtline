@@ -126,4 +126,6 @@ class StringConstant {
   static const String allBids = "All Bids";
   static const String acceptedBids = "Accepted Bids";
   static const String uploadReceiptImage = "Upload Receipt Image";
+  static const String companyNameScreenText =
+      "With the profitability calulator you can plan your lighting systems quickly, safely and creatively. If you're interested in our economic calculator please do not hesitate to contact us!";
 }

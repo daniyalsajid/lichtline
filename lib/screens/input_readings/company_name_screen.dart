@@ -51,6 +51,14 @@ class _CompanyNameScreenState extends State<CompanyNameScreen> {
                 SizedBox(
                   height: 40,
                 ),
+                TextComponent(
+                  text: StringConstant.companyNameScreenText,
+                  textStyle: FontStyles.inter(
+                      color: ColorConstant.black,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400),
+                  textAlign: TextAlign.center,
+                ),
                 SizedBox(
                   height: 16,
                 ),
