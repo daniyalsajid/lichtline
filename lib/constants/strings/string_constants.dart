@@ -1,5 +1,7 @@
 class StringConstant {
-  static const String truckIt = "truckIt";
+  static const String energiekosten = "Energiekosten";
+  static const String co2VerbrouchKum = "CO2-verbrauch kum";
+  static const String energieVerbrouchKum = "Energieverbrauch kum";
   static const String lichtLine = "LichtLine";
   static const String altLosung = "Alt-Losung";
   static const String onboarding_title_1 = "Auction any items";

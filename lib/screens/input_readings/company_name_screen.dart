@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lichtline/components/app_logo_component.dart';
 import 'package:lichtline/components/buttons/button_component.dart';
 import 'package:lichtline/components/input_component.dart';
 import 'package:lichtline/components/text_component.dart';
@@ -46,16 +47,9 @@ class _CompanyNameScreenState extends State<CompanyNameScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                TextComponent(
-                  text: StringConstant.lichtLine,
-                  textStyle: FontStyles.inter(
-                      color: ColorConstant.black,
-                      fontSize: 38,
-                      fontWeight: FontWeight.bold),
-                  textAlign: TextAlign.center,
-                ),
+                AppLogo(),
                 SizedBox(
-                  height: 72,
+                  height: 40,
                 ),
                 SizedBox(
                   height: 16,

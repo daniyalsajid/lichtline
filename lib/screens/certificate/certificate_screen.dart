@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:lichtline/components/app_bars/simple_app_bar_component.dart';
+import 'package:lichtline/components/text_component.dart';
 import 'package:lichtline/constants/colors/colors_constants.dart';
+import 'package:lichtline/constants/strings/string_constants.dart';
 import 'package:lichtline/constants/styles/font_styles_constants.dart';
 import 'package:provider/provider.dart';
 import '../../providers/data_provider.dart';
@@ -81,7 +83,21 @@ class CertificateScreenState extends State<CertificateScreen> {
       ),
       body: Container(
         padding: EdgeInsets.all(20.0),
-        child: barChart(),
+        child: Column(
+          children: [
+            // TextComponent(
+            //   text: StringConstant.co2VerbrouchKum,
+            //   textStyle: FontStyles.inter(
+            //       color: ColorConstant.black,
+            //       fontSize: 20,
+            //       fontWeight: FontWeight.bold),
+            //   textAlign: TextAlign.center,
+            // ),
+            Expanded(
+              child: barChart(),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -7,6 +7,7 @@ import 'package:lichtline/screens/home/menu_selection_screen.dart';
 import 'package:lichtline/screens/input_readings/company_name_screen.dart';
 import 'package:lichtline/screens/input_readings/input_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:lichtline/screens/umweltrechner/umweltrechner.dart';
 import 'package:lichtline/splash_screen.dart';
 import 'constants/routes/routes_constants.dart';
 
@@ -39,6 +40,10 @@ onGenerateRoutes(RouteSettings settings) {
     case RouteConstants.economicCalculator:
       return MaterialPageRoute(
         builder: (_) => EconomicCalculatorScreen(),
+      );
+    case RouteConstants.umweltrechnerScreen:
+      return MaterialPageRoute(
+        builder: (_) => UmweltrechnerScreen(),
       );
     case RouteConstants.certificateScreen:
       return MaterialPageRoute(

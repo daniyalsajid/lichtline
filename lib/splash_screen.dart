@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lichtline/components/app_logo_component.dart';
 import 'package:lichtline/constants/assets/assets_constants.dart';
 import 'package:lichtline/constants/colors/colors_constants.dart';
 import 'package:lichtline/constants/routes/routes_constants.dart';
@@ -20,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Future.delayed(
       Duration(seconds: 1),
       () {
-        // Navigator.pushNamed(context, RouteConstants.login);
+        Navigator.pushNamed(context, RouteConstants.login);
       },
     );
   }
@@ -55,22 +56,6 @@ class _SplashScreenState extends State<SplashScreen> {
           ],
         ),
       ),
-    );
-  }
-}
-
-class AppLogo extends StatelessWidget {
-  const AppLogo({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.all(
-        Radius.circular(10),
-      ),
-      child: Image.asset(AssetConstant.logo),
     );
   }
 }

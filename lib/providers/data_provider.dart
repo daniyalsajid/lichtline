@@ -150,12 +150,14 @@ class DataProvider extends ChangeNotifier {
     int _days = int.parse(_valuesForCalculation[1].value);
     int _stuck = int.parse(_valuesForCalculation[2].value);
     int _watt = int.parse(_valuesForCalculation[3].value);
-    List _totalKw = [];
+
+    List<Sales> _totalKw = [];
     for (int i = 1; i <= _year; i++) {
       double tempCal = (_hours * _days * _stuck * (_watt / 1000)) * i;
-      _totalKw.add(tempCal);
+      _totalKw.add(Sales((_dateTime.year + i).toString(), tempCal));
     }
     print("KW: " + _totalKw.toString());
+    return _totalKw;
   }
 }
 
