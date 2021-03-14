@@ -20,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Future.delayed(
       Duration(seconds: 1),
       () {
-        Navigator.pushNamed(context, RouteConstants.login);
+        // Navigator.pushNamed(context, RouteConstants.login);
       },
     );
   }
@@ -41,14 +41,17 @@ class _SplashScreenState extends State<SplashScreen> {
             //     height: SizeConfig.screenHeight / 4,
             //   ),
             // ),
-            TextComponent(
-              text: StringConstant.lichtLine,
-              textStyle: FontStyles.inter(
-                  color: ColorConstant.white,
-                  fontSize: 38,
-                  fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
-            ),
+
+            AppLogo()
+
+            // TextComponent(
+            //   text: StringConstant.lichtLine,
+            //   textStyle: FontStyles.inter(
+            //       color: ColorConstant.white,
+            //       fontSize: 38,
+            //       fontWeight: FontWeight.bold),
+            //   textAlign: TextAlign.center,
+            // ),
           ],
         ),
       ),
@@ -56,3 +59,18 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 }
 
+class AppLogo extends StatelessWidget {
+  const AppLogo({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.all(
+        Radius.circular(10),
+      ),
+      child: Image.asset(AssetConstant.logo),
+    );
+  }
+}
