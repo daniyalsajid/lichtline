@@ -1,5 +1,7 @@
 class StringConstant {
-  static const String truckIt = "truckIt";
+  static const String energiekosten = "Energiekosten";
+  static const String co2VerbrouchKum = "CO2-verbrauch kum";
+  static const String energieVerbrouchKum = "Energieverbrauch kum";
   static const String lichtLine = "LichtLine";
   static const String altLosung = "Alt-Losung";
   static const String onboarding_title_1 = "Auction any items";
@@ -124,4 +126,6 @@ class StringConstant {
   static const String allBids = "All Bids";
   static const String acceptedBids = "Accepted Bids";
   static const String uploadReceiptImage = "Upload Receipt Image";
+  static const String companyNameScreenText =
+      "With the profitability calulator you can plan your lighting systems quickly, safely and creatively. If you're interested in our economic calculator please do not hesitate to contact us!";
 }

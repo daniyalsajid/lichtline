@@ -24,6 +24,7 @@ class RouteConstants {
   static const String reviewScreen = 'reviewScreen';
   static const String menuSelection = 'menuSelection';
   static const String economicCalculator = 'economicCalculator';
+  static const String umweltrechnerScreen = 'umweltrechnerScreen';
   static const String certificateScreen = 'certificateScreen';
   static const String companyNameScreen = 'companyNameScreen';
 }

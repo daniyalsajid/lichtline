@@ -70,23 +70,54 @@ class DataProvider extends ChangeNotifier {
     return _totalEnergyCosting;
   }
 
-  totalCosting(List<InputModel> _valuesForCalculation) {
-    List _totalCosting = [];
+  totalCosting(List<InputModel> _valuesForCalculation,
+      {bool isNewBulb = false}) {
+    List<Sales> _totalCosting = [];
     int _stuck = int.parse(_valuesForCalculation[2].value);
     int _maintenanceP = int.parse(_valuesForCalculation[5].value);
+    int _totalHours = int.parse(_valuesForCalculation[6].value);
+    int _userProvidedHours = int.parse(_valuesForCalculation[0].value);
+    int _numberOfDays = int.parse(_valuesForCalculation[1].value);
+    int _totalLife = (_totalHours / _userProvidedHours / _numberOfDays).round();
+    double _price = double.parse(_valuesForCalculation[4].value);
+    int _tempInt = _totalLife;
+    double newBulbInstallationCost;
+    if (isNewBulb) {
+      newBulbInstallationCost = _price * _stuck;
+    }
 
     var _totalEnergy = calculateEnergyCosting(_valuesForCalculation);
     for (var i = 0; i < _totalEnergy.length; i++) {
       if (i == 0) {
-        _totalCosting.add(_totalEnergy[i]);
-      } else {
-        int remainder = i % 2;
-        if (remainder == 0) {
-          _totalCosting.add(_totalCosting[i - 1] +
-              _totalEnergy[i + 1] +
-              _stuck * _maintenanceP);
+        if (isNewBulb) {
+          _totalEnergy[i].sales = newBulbInstallationCost;
+          _totalCosting.add(_totalEnergy[i]);
         } else {
-          _totalCosting.add(_totalCosting[i - 1] + _totalEnergy[i]);
+          _totalCosting.add(_totalEnergy[i]);
+        }
+      } else {
+        //TODO check
+        int remainder = i % _totalLife;
+        if (_totalLife == i) {
+          // if (_tempInt != _totalLife) {
+          // } else {
+          //   _totalLife = _totalLife + i - _tempInt;
+          // }
+
+          //  Sales(
+          //       (_dateTime.year + i).toString(),
+          //       double.parse(
+          //         _newValueForNextYear.toStringAsFixed(2),
+          //       )),
+          double _cost = _totalCosting[i - 1].sales + _totalEnergy[i].sales;
+          double _maintenance = _stuck.toDouble() * _maintenanceP.toDouble();
+          _totalCosting.add(
+              Sales((_dateTime.year + i).toString(), _cost + _maintenance));
+        } else {
+          // _totalCosting.add(_totalCosting[i - 1] + _totalEnergy[i]);
+
+          _totalCosting.add(Sales((_dateTime.year + i).toString(),
+              (_totalCosting[i - 1].sales + _totalEnergy[i].sales)));
         }
       }
     }
@@ -119,12 +150,14 @@ class DataProvider extends ChangeNotifier {
     int _days = int.parse(_valuesForCalculation[1].value);
     int _stuck = int.parse(_valuesForCalculation[2].value);
     int _watt = int.parse(_valuesForCalculation[3].value);
-    List _totalKw = [];
+
+    List<Sales> _totalKw = [];
     for (int i = 1; i <= _year; i++) {
       double tempCal = (_hours * _days * _stuck * (_watt / 1000)) * i;
-      _totalKw.add(tempCal);
+      _totalKw.add(Sales((_dateTime.year + i).toString(), tempCal));
     }
     print("KW: " + _totalKw.toString());
+    return _totalKw;
   }
 }
 

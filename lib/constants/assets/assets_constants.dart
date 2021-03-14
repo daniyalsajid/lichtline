@@ -54,5 +54,5 @@ class AssetConstant {
   static const String change_password_icon = "assets/change-password-icon.svg";
   static const String signout_icon = "assets/signout-icon.svg";
   static const String navigation_forward = "assets/ios-forward.svg";
-  static const String delivery_truck = "assets/delivery-truck.png";
+  static const String logo = "assets/logo.png";
 }

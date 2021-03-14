@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lichtline/components/app_logo_component.dart';
 import 'package:lichtline/constants/assets/assets_constants.dart';
 import 'package:lichtline/constants/colors/colors_constants.dart';
 import 'package:lichtline/constants/routes/routes_constants.dart';
@@ -41,18 +42,20 @@ class _SplashScreenState extends State<SplashScreen> {
             //     height: SizeConfig.screenHeight / 4,
             //   ),
             // ),
-            TextComponent(
-              text: StringConstant.lichtLine,
-              textStyle: FontStyles.inter(
-                  color: ColorConstant.white,
-                  fontSize: 38,
-                  fontWeight: FontWeight.bold),
-              textAlign: TextAlign.center,
-            ),
+
+            AppLogo()
+
+            // TextComponent(
+            //   text: StringConstant.lichtLine,
+            //   textStyle: FontStyles.inter(
+            //       color: ColorConstant.white,
+            //       fontSize: 38,
+            //       fontWeight: FontWeight.bold),
+            //   textAlign: TextAlign.center,
+            // ),
           ],
         ),
       ),
     );
   }
 }
-

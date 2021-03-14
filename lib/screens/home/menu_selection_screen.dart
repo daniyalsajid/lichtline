@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lichtline/components/app_logo_component.dart';
 import 'package:lichtline/components/text_component.dart';
 import 'package:lichtline/constants/colors/colors_constants.dart';
 import 'package:lichtline/constants/routes/routes_constants.dart';
@@ -26,7 +27,9 @@ class _MenuSelectionScreenState extends State<MenuSelectionScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Spacer(),
+              AppLogo(),
               Expanded(
+                flex: 3,
                 child: GridView.builder(
                   itemCount: btnList.length,
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -78,7 +81,10 @@ class _MenuSelectionScreenState extends State<MenuSelectionScreen> {
 }
 
 var btnList = [
-  {"title": StringConstant.umweltrechner, "route": ""},
+  {
+    "title": StringConstant.umweltrechner,
+    "route": RouteConstants.umweltrechnerScreen,
+  },
   {
     "title": StringConstant.wirtschaftlichkeitsrechner,
     "route": RouteConstants.economicCalculator,

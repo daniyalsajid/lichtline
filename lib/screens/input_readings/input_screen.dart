@@ -223,17 +223,18 @@ class _InputScreenState extends State<InputScreen> {
         backgroundColor: ColorConstant.black,
         elevation: 10,
         onPressed: () {
-          // if (_formKey.currentState.validate()) {
-          var dataProvider = Provider.of<DataProvider>(context, listen: false);
-          dataProvider.setInputValues(_lichtLine, _altLosung);
-          // dataProvider.calculateEnergyCosting();
-          // dataProvider.totalCarbonDioxide();
-          // dataProvider.totalKw();
-          // dataProvider.totalCosting();
-          Navigator.pushNamed(context, RouteConstants.menuSelection);
-          // } else {
-          //   print("false");
-          // }
+          if (_formKey.currentState.validate()) {
+            var dataProvider =
+                Provider.of<DataProvider>(context, listen: false);
+            dataProvider.setInputValues(_lichtLine, _altLosung);
+            // dataProvider.calculateEnergyCosting();
+            // dataProvider.totalCarbonDioxide();
+            // dataProvider.totalKw();
+            // dataProvider.totalCosting(_altLosung);
+            Navigator.pushNamed(context, RouteConstants.menuSelection);
+            // } else {
+            //   print("false");
+          }
         },
         label: Row(
           children: [

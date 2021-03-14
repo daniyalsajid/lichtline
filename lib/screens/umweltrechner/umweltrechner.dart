@@ -8,26 +8,22 @@ import 'package:lichtline/constants/styles/font_styles_constants.dart';
 import 'package:provider/provider.dart';
 import '../../providers/data_provider.dart';
 
-class EconomicCalculatorScreen extends StatefulWidget {
+class UmweltrechnerScreen extends StatefulWidget {
   @override
-  EconomicCalculatorScreenState createState() =>
-      EconomicCalculatorScreenState();
+  UmweltrechnerScreenState createState() => UmweltrechnerScreenState();
 }
 
-class EconomicCalculatorScreenState extends State<EconomicCalculatorScreen> {
-  List<charts.Series> seriesList;
+class UmweltrechnerScreenState extends State<UmweltrechnerScreen> {
+  List<charts.Series> seriesList1;
+  List<charts.Series> seriesList2;
   DataProvider dataProvider;
-  List<charts.Series<Sales, String>> _createRandomData() {
-    final lichtLine =
-        dataProvider.calculateEnergyCosting(dataProvider.lichtLine);
-    final altLousung =
-        dataProvider.calculateEnergyCosting(dataProvider.altLosung);
+  List<charts.Series<Sales, String>> _createRandomData(data1, data2) {
     return [
       charts.Series<Sales, String>(
         id: 'lichtline',
         domainFn: (Sales sales, _) => sales.year,
         measureFn: (Sales sales, _) => sales.sales,
-        data: lichtLine,
+        data: data1,
         fillColorFn: (Sales sales, _) {
           return charts.MaterialPalette.black;
         },
@@ -36,7 +32,7 @@ class EconomicCalculatorScreenState extends State<EconomicCalculatorScreen> {
         id: dataProvider.companyName,
         domainFn: (Sales sales, _) => sales.year,
         measureFn: (Sales sales, _) => sales.sales,
-        data: altLousung,
+        data: data2,
         fillColorFn: (Sales sales, _) {
           return charts.MaterialPalette.gray.shadeDefault;
         },
@@ -44,9 +40,9 @@ class EconomicCalculatorScreenState extends State<EconomicCalculatorScreen> {
     ];
   }
 
-  barChart() {
+  barChart(_list) {
     return new charts.BarChart(
-      seriesList,
+      _list,
       vertical: false,
       barGroupingType: charts.BarGroupingType.grouped,
       behaviors: [
@@ -70,14 +66,19 @@ class EconomicCalculatorScreenState extends State<EconomicCalculatorScreen> {
   void initState() {
     super.initState();
     dataProvider = Provider.of<DataProvider>(context, listen: false);
-    seriesList = _createRandomData();
+    seriesList1 = _createRandomData(
+        dataProvider.totalCarbonDioxide(dataProvider.lichtLine),
+        dataProvider.totalCarbonDioxide(dataProvider.altLosung));
+    seriesList2 = _createRandomData(
+        dataProvider.totalKw(dataProvider.lichtLine),
+        dataProvider.totalKw(dataProvider.altLosung));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: SimpleAppBarComponent(
-        title: "Wirtschaftlichkeitsrechner",
+        title: StringConstant.umweltrechner,
         titleStyle: FontStyles.inter(
             color: ColorConstant.white,
             fontSize: 18,
@@ -90,15 +91,26 @@ class EconomicCalculatorScreenState extends State<EconomicCalculatorScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextComponent(
-              text: StringConstant.energiekosten,
+              text: StringConstant.co2VerbrouchKum,
               textStyle: FontStyles.inter(
                   color: ColorConstant.black,
-                  fontSize: 30,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
             Expanded(
-              child: barChart(),
+              child: barChart(seriesList1),
+            ),
+            TextComponent(
+              text: StringConstant.energieVerbrouchKum,
+              textStyle: FontStyles.inter(
+                  color: ColorConstant.black,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+            ),
+            Expanded(
+              child: barChart(seriesList2),
             ),
           ],
         ),
